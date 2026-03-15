@@ -10,7 +10,7 @@
   </section>
   <section class="profile-form-card">
     <h2 class="section-title small">Meus dados</h2>
-    <form method="post" class="form-grid two-col">
+    <form method="post" enctype="multipart/form-data" class="form-grid two-col">
       {{ form.hidden_tag() }}
       <label>{{ form.name.label }} {{ form.name() }}</label>
       <label>{{ form.username.label }} {{ form.username() }}</label>
@@ -18,7 +18,10 @@
       <label>{{ form.birth_date.label }} {{ form.birth_date() }}</label>
       <label>{{ form.city.label }} {{ form.city() }}</label>
       <label>{{ form.state.label }} {{ form.state() }}</label>
-      <label class="full-span">{{ form.avatar_url.label }} {{ form.avatar_url() }}</label>
+      <label class="full-span">Foto de perfil
+        <input type="file" name="avatar_file" accept=".png,.jpg,.jpeg,.webp,.svg">
+      </label>
+      <div class="full-span form-note">Envie uma imagem para atualizar sua foto de perfil.</div>
       <div class="full-span">{{ form.submit(class_='btn btn-primary') }}</div>
     </form>
   </section>

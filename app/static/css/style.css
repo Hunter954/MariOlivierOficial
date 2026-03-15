@@ -171,6 +171,20 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
 .section-title.small { font-size: 1.35rem; }
 .section-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .helper, .eyebrow, .tag, .flash, .stack-card p, .player-meta p, .comment-card p, .empty-state, .feature-list, .form-note { color: var(--muted); }
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.02);
+  color: var(--gold);
+  font-size: .92rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
 .eyebrow, .tag { color: var(--gold); font-weight: 700; letter-spacing: .02em; }
 
 .hero-card, .profile-card, .profile-form-card, .player-panel, .comments-panel, .info-card, .stack-card, .metric-card, .subscription-card, .season-hero, .media-card {
@@ -198,6 +212,12 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(25,0,0,.78));
 }
 .hero-overlay h2 { font-size: 2.35rem; margin: 10px 0 6px; max-width: 16ch; }
+.hero-line-title {
+  max-width: none !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .hero-overlay p { margin: 0 0 18px; font-size: 1.05rem; max-width: 28ch; }
 .hero-actions, .player-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .btn {
@@ -237,8 +257,11 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   display: grid;
   gap: 14px;
 }
+.media-row-landscape .media-card.landscape {
+  width: 280px;
+}
 .stacked-mobile-card {
-  width: 100%;
+  width: 280px;
 }
 .stacked-mobile-card .thumb {
   height: 210px;
@@ -424,6 +447,14 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
     font-size: 1rem;
   }
   .helper { display: none; }
+  .section-link {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: .85rem;
+  }
+  .hero-line-title {
+    font-size: 1.38rem !important;
+  }
   .content-area {
     padding-bottom: 12px;
   }

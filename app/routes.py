@@ -225,7 +225,16 @@ def register_routes(app):
             current_user.birth_date = form.birth_date.data
             current_user.city = form.city.data.strip() if form.city.data else None
             current_user.state = form.state.data.strip() if form.state.data else None
-            current_user.avatar_url = form.avatar_url.data.strip() if form.avatar_url.data else current_user.avatar_url
+
+            uploaded_avatar = save_uploaded_file(
+                request.files.get('avatar_file'),
+                'avatars',
+                ALLOWED_IMAGE_EXTENSIONS,
+                preferred_name=f'user-{current_user.id}-avatar'
+            )
+            if uploaded_avatar:
+                current_user.avatar_url = uploaded_avatar
+
             db.session.commit()
             flash('Perfil atualizado.', 'success')
             return redirect(url_for('profile'))

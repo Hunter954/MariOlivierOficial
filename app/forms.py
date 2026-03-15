@@ -29,7 +29,6 @@ class ProfileForm(FlaskForm):
     birth_date = DateField('Data de nascimento', validators=[Optional()])
     city = StringField('Cidade', validators=[Optional(), Length(max=120)])
     state = StringField('Estado', validators=[Optional(), Length(max=120)])
-    avatar_url = StringField('URL do avatar', validators=[Optional(), Length(max=255)])
     submit = SubmitField('Salvar perfil')
 
 

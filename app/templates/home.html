@@ -9,7 +9,7 @@
       <div class="hero-media" style="background-image:url('{{ current_season.poster_url }}')"></div>
       <div class="hero-overlay">
         <span class="eyebrow">Continue assistindo</span>
-        <h2>{{ current_season.title }} • Episódio {{ hero_episode.order_index }}</h2>
+        <h2 class="hero-line-title">{{ current_season.title }} • Episódio {{ hero_episode.order_index }}</h2>
         <p>Episódio {{ hero_episode.order_index }}: {{ hero_episode.title }} • {{ hero_episode.duration_minutes }}min</p>
         {% if progress_percent %}
         <div class="progress-wrap">
@@ -29,7 +29,7 @@
   <section>
     <div class="section-header">
       <h2 class="section-title small">Próximos episódios</h2>
-      <span class="helper">novidades</span>
+      <a class="section-link" href="{{ url_for('season_detail', slug=current_season.slug) if current_season else url_for('seasons_page') }}">Ver todos</a>
     </div>
     <div class="media-row compact-left no-scrollbar mobile-snap-row">
       {% for episode in upcoming_episodes %}
@@ -46,7 +46,10 @@
   </section>
 
   <section>
-    <h2 class="section-title small">Próximas temporadas</h2>
+    <div class="section-header">
+      <h2 class="section-title small">Próximas temporadas</h2>
+      <a class="section-link" href="{{ url_for('seasons_page') }}">Ver todas</a>
+    </div>
     <div class="media-row compact-left no-scrollbar mobile-snap-row">
       {% for season in upcoming_seasons %}
       <a href="{{ url_for('season_detail', slug=season.slug) }}" class="media-card portrait season-card mobile-portrait-card">
@@ -64,7 +67,7 @@
   <div class="stacked-sections stacked-home-sections">
     <section>
       <h2 class="section-title small">Bônus</h2>
-      <div class="stacked-media-list">
+      <div class="media-row compact-left no-scrollbar mobile-snap-row media-row-landscape">
         {% for item in bonus_items %}
         <a class="media-card landscape stacked-mobile-card" href="{{ url_for('bonus_page') }}">
           <div class="thumb" style="background-image:url('{{ item.image_url }}')"></div>
@@ -78,7 +81,7 @@
     </section>
     <section>
       <h2 class="section-title small">Extras</h2>
-      <div class="stacked-media-list">
+      <div class="media-row compact-left no-scrollbar mobile-snap-row media-row-landscape">
         {% for item in extra_items %}
         <a class="media-card landscape stacked-mobile-card" href="{{ url_for('extras_page') }}">
           <div class="thumb" style="background-image:url('{{ item.image_url }}')"></div>
