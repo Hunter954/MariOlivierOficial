@@ -30,7 +30,7 @@ def create_app():
         SQLALCHEMY_DATABASE_URI=database_url,
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         UPLOAD_FOLDER=upload_dir,
-        MAX_CONTENT_LENGTH=64 * 1024 * 1024,
+        MAX_CONTENT_LENGTH=512 * 1024 * 1024,
     )
 
     Path(app.config['UPLOAD_FOLDER']).mkdir(parents=True, exist_ok=True)

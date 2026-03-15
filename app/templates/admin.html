@@ -15,6 +15,39 @@
 </section>
 <section class="split-sections admin-split">
   <div>
+    <h2 class="section-title small">Branding</h2>
+    <article class="profile-form-card admin-upload-card">
+      <div class="admin-brand-preview">
+        {% if brand_logo_url %}
+        <img src="{{ brand_logo_url }}" alt="Logomarca atual">
+        {% else %}
+        <div class="brand-placeholder">Mari-Olivier</div>
+        {% endif %}
+      </div>
+      <form method="post" action="{{ url_for('admin_logo_upload') }}" enctype="multipart/form-data" class="form-grid">
+        <label>Subir logomarca
+          <input type="file" name="brand_logo" accept=".png,.jpg,.jpeg,.webp,.svg">
+        </label>
+        <button class="btn btn-primary">Salvar logomarca</button>
+      </form>
+    </article>
+  </div>
+  <div>
+    <h2 class="section-title small">Vídeos mais assistidos</h2>
+    <div class="stack-list">
+      {% for episode, watched in most_watched %}
+      <article class="stack-card compact">
+        <div>
+          <strong>{{ episode.title }}</strong>
+          <p>{{ watched }} segundos assistidos</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<section class="split-sections admin-split">
+  <div>
     <h2 class="section-title small">Usuários</h2>
     <div class="stack-list">
       {% for user in users %}
@@ -31,13 +64,13 @@
     </div>
   </div>
   <div>
-    <h2 class="section-title small">Vídeos mais assistidos</h2>
+    <h2 class="section-title small">Últimos episódios</h2>
     <div class="stack-list">
-      {% for episode, watched in most_watched %}
+      {% for episode in episodes %}
       <article class="stack-card compact">
         <div>
           <strong>{{ episode.title }}</strong>
-          <p>{{ watched }} segundos assistidos</p>
+          <p>{{ episode.season.title }} • {{ episode.status }}</p>
         </div>
       </article>
       {% endfor %}

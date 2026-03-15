@@ -9,10 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Allura&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="{% if request.endpoint == 'home' %}home-screen{% endif %}">
   <div class="app-shell">
     <aside class="sidebar">
-      <a href="{{ url_for('home') }}" class="brand">Mari-Olivier</a>
+      <a href="{{ url_for('home') }}" class="brand">{% if brand_logo_url %}<img src="{{ brand_logo_url }}" alt="Mari-Olivier">{% else %}<span>Mari-Olivier</span>{% endif %}</a>
       <nav class="sidebar-nav">
         <a class="nav-pill {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a>
         <a class="nav-pill {% if request.endpoint in ['seasons_page','season_detail'] %}active{% endif %}" href="{{ url_for('seasons_page') }}">Temporadas</a>
@@ -21,7 +21,7 @@
       </nav>
       <div class="sidebar-footer">
         <a class="nav-pill secondary {% if request.endpoint == 'profile' %}active{% endif %}" href="{{ url_for('profile') if current_user.is_authenticated else url_for('login') }}">Configurações</a>
-        <a class="nav-pill secondary" href="#">Help</a>
+        <a class="nav-pill secondary" href="mailto:suporte@mariolivier.com">Help</a>
       </div>
     </aside>
 

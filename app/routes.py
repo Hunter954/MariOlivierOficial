@@ -1,11 +1,19 @@
 from functools import wraps
-from flask import render_template, redirect, url_for, flash, request, jsonify
+import json
+import os
+from pathlib import Path
+from flask import render_template, redirect, url_for, flash, request, jsonify, current_app, send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import check_password_hash
+from werkzeug.utils import secure_filename
 from . import db
 from .forms import LoginForm, RegisterForm, CommentForm, ProfileForm, EpisodeForm
 from .models import User, Season, Episode, VideoProgress, Comment, BonusItem, ExtraItem, Notification, Subscription
 from .utils import format_seconds_to_progress
+
+
+ALLOWED_IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.webp', '.svg'}
+ALLOWED_VIDEO_EXTENSIONS = {'.mp4', '.mov', '.m4v', '.webm'}
 
 
 def admin_required(view_func):
@@ -28,18 +36,69 @@ def get_resume_data(user, episode):
     return progress, progress_percent
 
 
+def slugify(value: str) -> str:
+    base = secure_filename((value or '').strip().lower().replace(' ', '-'))
+    return base or 'episodio'
+
+
+def _settings_path() -> Path:
+    return Path(current_app.config['UPLOAD_FOLDER']) / 'settings.json'
+
+
+def load_app_settings() -> dict:
+    path = _settings_path()
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding='utf-8'))
+    except Exception:
+        return {}
+
+
+def save_app_settings(data: dict) -> None:
+    path = _settings_path()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+
+
+def save_uploaded_file(file_storage, subfolder: str, allowed_extensions: set[str], preferred_name: str | None = None):
+    if not file_storage or not file_storage.filename:
+        return None
+
+    original_name = secure_filename(file_storage.filename)
+    ext = Path(original_name).suffix.lower()
+    if ext not in allowed_extensions:
+        return None
+
+    target_dir = Path(current_app.config['UPLOAD_FOLDER']) / subfolder
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    filename = f"{preferred_name}{ext}" if preferred_name else original_name
+    file_path = target_dir / filename
+    file_storage.save(file_path)
+
+    relative_path = Path(subfolder) / filename
+    return url_for('uploaded_file', path=str(relative_path).replace('\\', '/'))
+
+
 def register_routes(app):
     @app.context_processor
     def inject_shell_data():
         unread_count = 0
         latest_notifications = []
+        brand_logo_url = load_app_settings().get('brand_logo_url')
         if current_user.is_authenticated:
             unread_count = Notification.query.filter_by(user_id=current_user.id, is_read=False).count()
             latest_notifications = Notification.query.filter_by(user_id=current_user.id).order_by(Notification.created_at.desc()).limit(5).all()
         return {
             'shell_notifications': latest_notifications,
             'unread_notifications_count': unread_count,
+            'brand_logo_url': brand_logo_url,
         }
+
+    @app.route('/uploads/<path:path>')
+    def uploaded_file(path):
+        return send_from_directory(current_app.config['UPLOAD_FOLDER'], path)
 
     @app.route('/')
     def home():
@@ -257,7 +316,22 @@ def register_routes(app):
         )
         users = User.query.order_by(User.created_at.desc()).limit(8).all()
         episodes = Episode.query.order_by(Episode.created_at.desc()).limit(8).all()
-        return render_template('admin.html', metrics=metrics, most_watched=most_watched, users=users, episodes=episodes)
+        return render_template('admin.html', metrics=metrics, most_watched=most_watched, users=users, episodes=episodes, brand_logo_url=load_app_settings().get('brand_logo_url'))
+
+    @app.route('/admin/logo', methods=['POST'])
+    @login_required
+    @admin_required
+    def admin_logo_upload():
+        logo_url = save_uploaded_file(request.files.get('brand_logo'), 'branding', ALLOWED_IMAGE_EXTENSIONS, preferred_name='brand-logo')
+        if not logo_url:
+            flash('Envie uma logomarca válida em PNG, JPG, WEBP ou SVG.', 'error')
+            return redirect(url_for('admin_dashboard'))
+
+        settings = load_app_settings()
+        settings['brand_logo_url'] = logo_url
+        save_app_settings(settings)
+        flash('Logomarca atualizada com sucesso.', 'success')
+        return redirect(url_for('admin_dashboard'))
 
     @app.route('/admin/users/<int:user_id>/toggle-block', methods=['POST'])
     @login_required
@@ -281,13 +355,25 @@ def register_routes(app):
         if request.method == 'POST' and form.validate_on_submit():
             season_id = int(request.form.get('season_id'))
             season = Season.query.get_or_404(season_id)
+
+            thumbnail_url = form.thumbnail_url.data.strip() if form.thumbnail_url.data else None
+            video_url = form.video_url.data.strip() if form.video_url.data else None
+
+            uploaded_thumb = save_uploaded_file(request.files.get('thumbnail_file'), 'episodes/thumbnails', ALLOWED_IMAGE_EXTENSIONS)
+            uploaded_video = save_uploaded_file(request.files.get('video_file'), 'episodes/videos', ALLOWED_VIDEO_EXTENSIONS)
+
+            if uploaded_thumb:
+                thumbnail_url = uploaded_thumb
+            if uploaded_video:
+                video_url = uploaded_video
+
             episode = Episode(
                 season=season,
                 title=form.title.data.strip(),
-                slug=form.title.data.strip().lower().replace(' ', '-'),
+                slug=slugify(form.title.data),
                 description=form.description.data,
-                thumbnail_url=form.thumbnail_url.data,
-                video_url=form.video_url.data,
+                thumbnail_url=thumbnail_url,
+                video_url=video_url,
                 duration_minutes=int(form.duration_minutes.data or 0),
                 status=form.status.data,
                 premiere_label=form.premiere_label.data,
