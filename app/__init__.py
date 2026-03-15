@@ -21,7 +21,9 @@ def create_app():
     upload_dir = os.getenv('UPLOAD_DIR', '/data/uploads' if Path('/data').exists() else str(base_dir / 'app' / 'uploads'))
     database_url = os.getenv('DATABASE_URL', f"sqlite:///{base_dir / 'instance' / 'app.db'}")
     if database_url.startswith('postgres://'):
-        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+        database_url = database_url.replace('postgres://', 'postgresql+psycopg://', 1)
+    elif database_url.startswith('postgresql://') and '+psycopg' not in database_url:
+        database_url = database_url.replace('postgresql://', 'postgresql+psycopg://', 1)
 
     app.config.update(
         SECRET_KEY=os.getenv('SECRET_KEY', 'dev-secret-key-change-me'),
@@ -44,7 +46,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return models.User.query.get(int(user_id))
+        return db.session.get(models.User, int(user_id))
 
     with app.app_context():
         if os.getenv('AUTO_INIT_DB', 'true').lower() == 'true':
