@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}{{ season.title }} • Mari-Olivier{% endblock %}
+{% block content %}
+<section class="season-hero">
+  <div class="season-hero__poster" style="background-image:url('{{ season.poster_url }}')"></div>
+  <div class="season-hero__content">
+    <span class="eyebrow">{{ season.release_label }}</span>
+    <h1 class="section-title">{{ season.title }}</h1>
+    <p>{{ season.description }}</p>
+    <p>{{ season.teaser }}</p>
+  </div>
+</section>
+<section>
+  <h2 class="section-title small">Episódios</h2>
+  <div class="media-row compact-left">
+    {% for episode in season.episodes %}
+    <a href="{{ url_for('episode_detail', slug=episode.slug) }}" class="media-card portrait">
+      <div class="thumb" style="background-image:url('{{ episode.thumbnail_url }}')"></div>
+      <div class="card-content">
+        <span class="tag">{{ episode.premiere_label }}</span>
+        <h3>{{ episode.title }}</h3>
+        <p>Episódio {{ episode.order_index }} • {{ episode.duration_minutes }}min</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Novo episódio • Mari-Olivier{% endblock %}
+{% block content %}
+<section class="profile-form-card">
+  <h1 class="section-title">Novo episódio</h1>
+  <form method="post" class="form-grid two-col">
+    {{ form.hidden_tag() }}
+    <label class="full-span">Temporada
+      <select name="season_id">
+        {% for season in seasons %}
+        <option value="{{ season.id }}">{{ season.title }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="full-span">{{ form.title.label }} {{ form.title() }}</label>
+    <label class="full-span">{{ form.description.label }} {{ form.description(rows=4) }}</label>
+    <label>{{ form.thumbnail_url.label }} {{ form.thumbnail_url() }}</label>
+    <label>{{ form.video_url.label }} {{ form.video_url() }}</label>
+    <label>{{ form.duration_minutes.label }} {{ form.duration_minutes() }}</label>
+    <label>{{ form.status.label }} {{ form.status() }}</label>
+    <label class="full-span">{{ form.premiere_label.label }} {{ form.premiere_label() }}</label>
+    <div class="full-span">{{ form.submit(class_='btn btn-primary') }}</div>
+  </form>
+</section>
+{% endblock %}

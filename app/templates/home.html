@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Home • Mari-Olivier{% endblock %}
+{% block content %}
+<div class="page-grid home-grid">
+  <section>
+    <h1 class="section-title">Temporada atual</h1>
+    {% if hero_episode %}
+    <article class="hero-card">
+      <div class="hero-media" style="background-image:url('{{ current_season.poster_url }}')"></div>
+      <div class="hero-overlay">
+        <span class="eyebrow">Continue assistindo</span>
+        <h2>{{ current_season.title }} • Episódio {{ hero_episode.order_index }}</h2>
+        <p>Episódio {{ hero_episode.order_index }}: {{ hero_episode.title }} • {{ hero_episode.duration_minutes }}min</p>
+        {% if progress_percent %}
+        <div class="progress-wrap">
+          <div class="progress-bar"><span style="width: {{ progress_percent }}%"></span></div>
+          <small>{{ progress_percent }}% assistido</small>
+        </div>
+        {% endif %}
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="{{ url_for('episode_detail', slug=hero_episode.slug) }}">{{ 'Retomar' if progress else 'Assistir agora' }}</a>
+          <a class="btn btn-ghost" href="{{ url_for('episode_detail', slug=hero_episode.slug) }}">Recomeçar</a>
+        </div>
+      </div>
+    </article>
+    {% endif %}
+  </section>
+
+  <section>
+    <div class="section-header">
+      <h2 class="section-title small">Próximos episódios</h2>
+      <span class="helper">cards 9:16 alinhados à esquerda</span>
+    </div>
+    <div class="media-row compact-left">
+      {% for episode in upcoming_episodes %}
+      <a href="{{ url_for('episode_detail', slug=episode.slug) }}" class="media-card portrait">
+        <div class="thumb" style="background-image:url('{{ episode.thumbnail_url }}')"></div>
+        <div class="card-content">
+          <span class="tag">{{ episode.premiere_label }}</span>
+          <h3>{{ episode.title }}</h3>
+          <p>{{ episode.duration_minutes }}min</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title small">Próximas temporadas</h2>
+    <div class="media-row compact-left">
+      {% for season in upcoming_seasons %}
+      <a href="{{ url_for('season_detail', slug=season.slug) }}" class="media-card portrait season-card">
+        <div class="thumb" style="background-image:url('{{ season.poster_url }}')"></div>
+        <div class="card-content">
+          <span class="tag">{{ season.release_label }}</span>
+          <h3>{{ season.title }}</h3>
+          <p>{{ season.teaser }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <div class="split-sections">
+    <section>
+      <h2 class="section-title small">Bônus</h2>
+      <div class="media-row compact-left mini-row">
+        {% for item in bonus_items %}
+        <a class="media-card landscape" href="{{ url_for('bonus_page') }}">
+          <div class="thumb" style="background-image:url('{{ item.image_url }}')"></div>
+          <div class="card-content">
+            <span class="tag">{{ item.cta_label }}</span>
+            <h3>{{ item.title }}</h3>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    <section>
+      <h2 class="section-title small">Extras</h2>
+      <div class="media-row compact-left mini-row">
+        {% for item in extra_items %}
+        <a class="media-card landscape" href="{{ url_for('extras_page') }}">
+          <div class="thumb" style="background-image:url('{{ item.image_url }}')"></div>
+          <div class="card-content">
+            <span class="tag">{{ item.category }}</span>
+            <h3>{{ item.title }}</h3>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

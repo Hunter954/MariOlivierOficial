@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Entrar' if mode == 'login' else 'Criar conta' }} • Mari-Olivier{% endblock %}
+{% block content %}
+<div class="auth-wrap">
+  <div class="auth-card">
+    <span class="eyebrow">Acesso premium</span>
+    <h1>{{ 'Entrar na plataforma' if mode == 'login' else 'Criar sua conta' }}</h1>
+    <p>Streaming premium, episódios exclusivos, bônus, extras e interação com a comunidade.</p>
+    <form method="post" class="form-grid">
+      {{ form.hidden_tag() }}
+      {% if mode == 'register' %}
+      <label>{{ form.name.label }} {{ form.name(placeholder='Seu nome') }}</label>
+      {% endif %}
+      <label>{{ form.email.label }} {{ form.email(placeholder='voce@email.com') }}</label>
+      <label>{{ form.password.label }} {{ form.password(placeholder='••••••••') }}</label>
+      {% if mode == 'register' %}
+      <label>{{ form.confirm_password.label }} {{ form.confirm_password(placeholder='••••••••') }}</label>
+      {% endif %}
+      {{ form.submit(class_='btn btn-primary full') }}
+    </form>
+    <div class="auth-footer">
+      {% if mode == 'login' %}
+      <span>Não tem conta? <a href="{{ url_for('register') }}">Criar agora</a></span>
+      {% else %}
+      <span>Já tem acesso? <a href="{{ url_for('login') }}">Entrar</a></span>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Perfil • Mari-Olivier{% endblock %}
+{% block content %}
+<div class="profile-layout">
+  <section class="profile-card">
+    <img class="profile-avatar" src="{{ current_user.avatar_url }}" alt="avatar">
+    <h1 class="section-title">{{ current_user.name }}</h1>
+    <p>@{{ current_user.username }}</p>
+    <a class="btn btn-ghost" href="{{ url_for('subscription_page') }}">Ver assinatura</a>
+  </section>
+  <section class="profile-form-card">
+    <h2 class="section-title small">Meus dados</h2>
+    <form method="post" class="form-grid two-col">
+      {{ form.hidden_tag() }}
+      <label>{{ form.name.label }} {{ form.name() }}</label>
+      <label>{{ form.username.label }} {{ form.username() }}</label>
+      <label>{{ form.phone.label }} {{ form.phone() }}</label>
+      <label>{{ form.birth_date.label }} {{ form.birth_date() }}</label>
+      <label>{{ form.city.label }} {{ form.city() }}</label>
+      <label>{{ form.state.label }} {{ form.state() }}</label>
+      <label class="full-span">{{ form.avatar_url.label }} {{ form.avatar_url() }}</label>
+      <div class="full-span">{{ form.submit(class_='btn btn-primary') }}</div>
+    </form>
+  </section>
+</div>
+{% endblock %}

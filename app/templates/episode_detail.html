@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}{{ episode.title }} • Mari-Olivier{% endblock %}
+{% block content %}
+<div class="player-layout">
+  <section class="player-panel">
+    <div class="video-shell">
+      <video id="episode-player" controls playsinline data-episode-id="{{ episode.id }}">
+        <source src="{{ episode.video_url }}" type="video/mp4">
+      </video>
+    </div>
+    <div class="player-meta">
+      <span class="eyebrow">{{ episode.season.title }} • Episódio {{ episode.order_index }}</span>
+      <h1 class="section-title">{{ episode.title }}</h1>
+      <p>{{ episode.description }}</p>
+      {% if progress_percent %}
+      <div class="progress-wrap inline">
+        <div class="progress-bar"><span style="width: {{ progress_percent }}%"></span></div>
+        <small>{{ progress_percent }}% assistido</small>
+      </div>
+      {% endif %}
+      <div class="player-actions">
+        <form method="post" action="{{ url_for('like_episode', episode_id=episode.id) }}">
+          <button class="btn btn-ghost">❤ {{ episode.like_count() }}</button>
+        </form>
+        <button class="btn btn-ghost copy-link" data-copy="{{ request.url }}">Copiar link</button>
+        {% if next_episode %}
+        <a class="btn btn-primary" href="{{ url_for('episode_detail', slug=next_episode.slug) }}">Próximo episódio</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <aside class="comments-panel">
+    <div class="comments-head">
+      <h2>Comentários</h2>
+      <span>{{ comments|length }} mensagens</span>
+    </div>
+    {% if current_user.is_authenticated %}
+    <form method="post" class="comment-form">
+      {{ form.hidden_tag() }}
+      {{ form.content(placeholder='Escreva um comentário para a comunidade...') }}
+      {{ form.submit(class_='btn btn-primary') }}
+    </form>
+    {% else %}
+    <div class="empty-state">Faça login para comentar.</div>
+    {% endif %}
+    <div class="comments-list">
+      {% for comment in comments %}
+      <article class="comment-card">
+        <div class="comment-top">
+          <div class="comment-user">
+            <img src="{{ comment.user.avatar_url }}" alt="avatar">
+            <div>
+              <strong>{{ comment.user.name }}</strong>
+              <small>@{{ comment.user.username }}</small>
+            </div>
+          </div>
+          <small>{{ comment.created_at.strftime('%d/%m %H:%M') }}</small>
+        </div>
+        <p>{{ comment.content }}</p>
+        <div class="comment-actions">
+          <form method="post" action="{{ url_for('like_comment', comment_id=comment.id) }}"><button class="tiny-link">Curtir {{ comment.like_count() }}</button></form>
+          {% if current_user.is_authenticated and (current_user.id == comment.user_id or current_user.is_admin()) %}
+          <form method="post" action="{{ url_for('delete_comment', comment_id=comment.id) }}"><button class="tiny-link danger">Excluir</button></form>
+          {% endif %}
+        </div>
+      </article>
+      {% else %}
+      <div class="empty-state">Nenhum comentário ainda.</div>
+      {% endfor %}
+    </div>
+  </aside>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  window.__resumeAt = {{ progress.seconds_watched if progress else 0 }};
+</script>
+{% endblock %}

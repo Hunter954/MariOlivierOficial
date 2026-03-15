@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Admin • Mari-Olivier{% endblock %}
+{% block content %}
+<section>
+  <div class="section-header">
+    <h1 class="section-title">Painel administrativo</h1>
+    <a class="btn btn-primary" href="{{ url_for('admin_episode_new') }}">Novo episódio</a>
+  </div>
+  <div class="metric-grid">
+    <article class="metric-card"><strong>{{ metrics.users }}</strong><span>Usuários</span></article>
+    <article class="metric-card"><strong>{{ metrics.episodes }}</strong><span>Episódios</span></article>
+    <article class="metric-card"><strong>{{ metrics.comments }}</strong><span>Comentários</span></article>
+    <article class="metric-card"><strong>{{ metrics.active_trials }}</strong><span>Trials/ativos</span></article>
+  </div>
+</section>
+<section class="split-sections admin-split">
+  <div>
+    <h2 class="section-title small">Usuários</h2>
+    <div class="stack-list">
+      {% for user in users %}
+      <article class="stack-card compact">
+        <div>
+          <strong>{{ user.name }}</strong>
+          <p>{{ user.email }} • {{ user.role }}</p>
+        </div>
+        <form method="post" action="{{ url_for('toggle_user_block', user_id=user.id) }}">
+          <button class="btn btn-ghost">{{ 'Desbloquear' if user.is_blocked else 'Bloquear' }}</button>
+        </form>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+  <div>
+    <h2 class="section-title small">Vídeos mais assistidos</h2>
+    <div class="stack-list">
+      {% for episode, watched in most_watched %}
+      <article class="stack-card compact">
+        <div>
+          <strong>{{ episode.title }}</strong>
+          <p>{{ watched }} segundos assistidos</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

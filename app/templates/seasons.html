@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Temporadas • Mari-Olivier{% endblock %}
+{% block content %}
+<section>
+  <h1 class="section-title">Temporadas</h1>
+  <div class="media-row compact-left wide-grid">
+    {% for season in seasons %}
+    <a href="{{ url_for('season_detail', slug=season.slug) }}" class="media-card portrait season-card">
+      <div class="thumb" style="background-image:url('{{ season.poster_url }}')"></div>
+      <div class="card-content">
+        <span class="tag">{{ season.release_label }}</span>
+        <h3>{{ season.title }}</h3>
+        <p>{{ season.description }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

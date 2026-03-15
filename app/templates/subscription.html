@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Assinatura • Mari-Olivier{% endblock %}
+{% block content %}
+<section class="subscription-panel">
+  <div class="info-card subscription-card">
+    <div class="info-body">
+      <span class="eyebrow">Monetização</span>
+      <h1 class="section-title">{{ subscription.plan_name if subscription else 'Assinatura Premium' }}</h1>
+      <p>Status: <strong>{{ subscription.status if subscription else 'trial' }}</strong></p>
+      <p>Renovação: <strong>{{ subscription.renews_on.strftime('%d/%m/%Y') if subscription and subscription.renews_on else 'a definir' }}</strong></p>
+      <ul class="feature-list">
+        <li>Episódios completos</li>
+        <li>Bônus e experiências</li>
+        <li>Extras e bastidores</li>
+        <li>Notificações prioritárias</li>
+      </ul>
+      <a class="btn btn-primary" href="{{ subscription.checkout_url if subscription else '#' }}">Gerenciar plano</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Extras • Mari-Olivier{% endblock %}
+{% block content %}
+<section>
+  <h1 class="section-title">Extras</h1>
+  <div class="card-grid three-col">
+    {% for item in items %}
+    <article class="info-card tall">
+      <div class="info-thumb" style="background-image:url('{{ item.image_url }}')"></div>
+      <div class="info-body">
+        <span class="tag">{{ item.category }}</span>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
