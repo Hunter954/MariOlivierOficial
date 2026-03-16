@@ -50,8 +50,10 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   justify-content: flex-start;
 }
 .brand span {
-  font-family: 'Allura', cursive;
-  font-size: 4rem;
+  font-family: 'Cinzel', serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: .04em;
   color: var(--gold);
   line-height: 1;
 }
@@ -320,8 +322,10 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   object-fit: contain;
 }
 .brand-placeholder {
-  font-family: 'Allura', cursive;
-  font-size: 3.2rem;
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: .04em;
   color: var(--gold);
 }
 
@@ -457,5 +461,311 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   }
   .content-area {
     padding-bottom: 12px;
+  }
+}
+
+
+.brand-inline {
+  display: none;
+}
+.nav-pill i {
+  font-size: 1.05rem;
+}
+.nav-pill span {
+  display: inline-flex;
+  align-items: center;
+}
+.mobile-icon-only {
+  display: none;
+}
+.desktop-only-link {
+  display: inline-flex;
+}
+.avatar-button {
+  padding: 0;
+  width: 46px;
+}
+.avatar-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.mobile-home-layout .section-title.small {
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+.mobile-inline-link i {
+  font-size: .82rem;
+}
+.solo-title {
+  margin-bottom: 12px;
+}
+.compact-card-content {
+  position: relative;
+  padding-top: 18px;
+}
+.duration-badge {
+  position: absolute;
+  right: 12px;
+  top: -14px;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  background: rgba(20,20,20,.9);
+  color: #fff;
+  font-size: .76rem;
+  font-weight: 700;
+}
+.btn-mobile-play i,
+.btn-mobile-icon i {
+  font-size: 1rem;
+}
+.mobile-hero-actions .btn span {
+  display: inline-flex;
+  align-items: center;
+}
+.mobile-card-row {
+  padding-bottom: 4px;
+}
+
+@media (max-width: 1100px) {
+  .nav-pill {
+    gap: 8px;
+  }
+  .nav-pill i {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    background: #111;
+  }
+  .app-shell {
+    min-height: 100vh;
+  }
+  .sidebar {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    top: auto;
+    height: auto;
+    padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+    border-radius: 22px;
+    background: rgba(18,18,18,.96);
+    border-color: rgba(255,255,255,.08);
+    backdrop-filter: blur(20px);
+  }
+  .sidebar-footer {
+    display: none;
+  }
+  .sidebar-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .nav-pill {
+    min-height: 54px;
+    padding: 7px 4px 6px;
+    border-radius: 16px;
+    background: transparent;
+    border: 1px solid transparent;
+    flex-direction: column;
+    gap: 4px;
+    color: rgba(255,255,255,.72);
+    font-size: .72rem;
+    font-weight: 600;
+  }
+  .nav-pill i {
+    font-size: 1.15rem;
+  }
+  .nav-pill.active {
+    color: var(--gold);
+    background: rgba(255,255,255,.03);
+    border-color: rgba(242,178,79,.32);
+  }
+  .main-shell {
+    padding-bottom: 108px;
+  }
+  .topbar.mobile-app-topbar {
+    min-height: 68px;
+    padding: 14px 12px 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    background: rgba(14,14,14,.92);
+  }
+  .brand-inline {
+    display: inline-flex;
+    align-items: center;
+    min-height: auto;
+  }
+  .brand-inline span {
+    font-size: 1.15rem;
+    letter-spacing: .04em;
+  }
+  .brand-inline img {
+    max-width: 156px;
+    max-height: 34px;
+  }
+  .searchbar {
+    display: none;
+  }
+  .top-actions {
+    width: auto;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  .mobile-icon-only {
+    display: inline-flex;
+    width: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.05);
+    border-color: rgba(255,255,255,.06);
+  }
+  .mobile-icon-only i {
+    font-size: 1.08rem;
+  }
+  .desktop-user-chip,
+  .desktop-only-link {
+    display: none;
+  }
+  .content-area {
+    padding: 12px 12px 10px;
+  }
+  .flash-stack {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .section-header.mobile-section-header {
+    margin-bottom: 12px;
+  }
+  .section-title.small {
+    font-size: 1.05rem;
+    margin-bottom: 0;
+  }
+  .section-link.mobile-inline-link {
+    min-height: auto;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: var(--gold);
+    font-size: .92rem;
+    gap: 6px;
+  }
+  .hero-card.mobile-hero-card {
+    min-height: auto;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #191919;
+    border-color: rgba(255,255,255,.07);
+  }
+  .netflix-mobile-card .hero-media {
+    position: relative;
+    height: 330px;
+    filter: saturate(.95) brightness(.72);
+  }
+  .netflix-mobile-card .hero-overlay.mobile-overlay-card {
+    position: relative;
+    padding: 0 0 16px;
+    background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0));
+  }
+  .mobile-progress-wrap {
+    padding: 0 0 12px;
+  }
+  .mobile-progress-wrap .progress-bar {
+    height: 4px;
+    border-radius: 0;
+    background: rgba(255,255,255,.08);
+  }
+  .mobile-progress-wrap .progress-bar span {
+    background: var(--gold);
+  }
+  .mobile-progress-wrap small {
+    display: none;
+  }
+  .mobile-hero-copy {
+    padding: 0 16px;
+  }
+  .hero-line-title {
+    font-size: 1.05rem !important;
+    line-height: 1.1;
+    letter-spacing: .02em;
+  }
+  .mobile-hero-copy p {
+    margin: 6px 0 0;
+    font-size: 1rem;
+    color: rgba(255,255,255,.8);
+  }
+  .mobile-hero-actions {
+    padding: 14px 16px 0;
+    grid-template-columns: 1fr 56px;
+    gap: 12px;
+  }
+  .btn-mobile-play {
+    min-height: 42px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 700;
+    gap: 8px;
+  }
+  .btn-mobile-icon {
+    min-height: 42px;
+    width: 56px;
+    padding: 0;
+    border-radius: 999px;
+    background: rgba(255,255,255,.04);
+    border-color: rgba(255,255,255,.08);
+  }
+  .media-row.mobile-card-row,
+  .media-row.mobile-snap-row {
+    gap: 10px;
+    padding-right: 6px;
+  }
+  .mobile-portrait-card,
+  .mobile-episode-card {
+    width: 132px;
+    border-radius: 16px;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  .mobile-episode-card .thumb,
+  .mobile-portrait-card .thumb {
+    height: 194px;
+    border-radius: 14px;
+  }
+  .mobile-episode-card .card-content {
+    padding: 8px 2px 4px;
+  }
+  .mobile-episode-card h3 {
+    margin: 6px 0 2px;
+    font-size: .98rem;
+    line-height: 1.12;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .mobile-episode-card p {
+    font-size: .82rem;
+  }
+  .stacked-home-sections {
+    gap: 16px;
+  }
+  .stacked-mobile-card {
+    width: 248px;
+    border-radius: 18px;
+  }
+  .stacked-mobile-card .thumb {
+    height: 156px;
   }
 }
