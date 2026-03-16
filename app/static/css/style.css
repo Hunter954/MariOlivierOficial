@@ -79,6 +79,7 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   padding: 0 20px;
   display: flex;
   align-items: center;
+  gap: 14px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: rgba(80,0,6,.34);
