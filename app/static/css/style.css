@@ -768,9 +768,10 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
     min-width: 132px;
     scroll-snap-align: start;
     border-radius: 16px;
-    background: transparent;
-    border: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    border: 1px solid var(--line);
     box-shadow: none;
+    overflow: hidden;
   }
   .mobile-episode-card .thumb,
   .mobile-portrait-card .thumb {
