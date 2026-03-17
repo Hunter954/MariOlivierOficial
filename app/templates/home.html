@@ -72,7 +72,7 @@
         <h2 class="section-title small">Bônus</h2>
         <a class="section-link mobile-inline-link" href="{{ url_for('bonus_page') }}">Ver todos <i class="bi bi-chevron-right"></i></a>
       </div>
-      <div class="media-row compact-left no-scrollbar mobile-snap-row media-row-landscape">
+      <div class="media-row compact-left no-scrollbar mobile-snap-row mobile-card-row media-row-landscape">
         {% for item in bonus_items %}
         <a class="media-card landscape stacked-mobile-card" href="{{ url_for('bonus_page') }}">
           <div class="thumb" style="background-image:url('{{ item.image_url }}')"></div>
@@ -89,7 +89,7 @@
         <h2 class="section-title small">Extras</h2>
         <a class="section-link mobile-inline-link" href="{{ url_for('extras_page') }}">Ver todos <i class="bi bi-chevron-right"></i></a>
       </div>
-      <div class="media-row compact-left no-scrollbar mobile-snap-row media-row-landscape">
+      <div class="media-row compact-left no-scrollbar mobile-snap-row mobile-card-row media-row-landscape">
         {% for item in extra_items %}
         <a class="media-card landscape stacked-mobile-card" href="{{ url_for('extras_page') }}">
           <div class="thumb" style="background-image:url('{{ item.image_url }}')"></div>
