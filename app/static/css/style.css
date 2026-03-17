@@ -109,7 +109,7 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   align-items: center;
   gap: 18px;
   border-bottom: 1px solid rgba(199,170,148,.10);
-  background: rgba(79,31,45,.78);
+  background: rgba(64,2,19,.78);
   backdrop-filter: blur(20px);
 }
 .searchbar { flex: 1; max-width: 760px; }
