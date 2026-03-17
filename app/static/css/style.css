@@ -662,10 +662,20 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
     font-size: .92rem;
     gap: 6px;
   }
+  .page-grid.home-grid,
+  .page-grid.home-grid > section,
+  .page-grid.home-grid > div,
+  .mobile-home-layout,
+  .mobile-home-layout > section,
+  .mobile-home-layout > div {
+    min-width: 0;
+    width: 100%;
+  }
   .hero-card.mobile-hero-card {
     min-height: auto;
     width: 100%;
     max-width: 100%;
+    margin: 0;
     border-radius: 22px;
     overflow: hidden;
     background: #191919;
@@ -674,15 +684,17 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   .netflix-mobile-card .hero-media {
     position: relative;
     width: 100%;
-    height: 330px;
+    height: auto;
+    aspect-ratio: 16 / 9;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
-    background-color: #5a0008;
+    background-color: #6b000a;
     filter: saturate(.95) brightness(.72);
   }
   .netflix-mobile-card .hero-overlay.mobile-overlay-card {
     position: relative;
+    width: 100%;
     padding: 0 0 16px;
     background: linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,0));
   }
@@ -734,19 +746,26 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
     border-color: rgba(255,255,255,.08);
   }
   .media-row.mobile-card-row,
-  .media-row.mobile-snap-row {
-    gap: 10px;
-    padding-right: 12px;
+  .media-row.mobile-snap-row,
+  .media-row.media-row-landscape {
+    display: flex;
+    flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
     overscroll-behavior-x: contain;
-    scroll-padding-inline: 12px;
+    scroll-snap-type: x mandatory;
+    touch-action: pan-x;
+    gap: 10px;
+    padding-right: 6px;
+    padding-bottom: 6px;
   }
   .mobile-portrait-card,
   .mobile-episode-card {
+    flex: 0 0 132px;
     width: 132px;
+    min-width: 132px;
+    scroll-snap-align: start;
     border-radius: 16px;
     background: transparent;
     border: 0;
@@ -776,7 +795,10 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
     gap: 16px;
   }
   .stacked-mobile-card {
+    flex: 0 0 248px;
     width: 248px;
+    min-width: 248px;
+    scroll-snap-align: start;
     border-radius: 18px;
   }
   .stacked-mobile-card .thumb {
