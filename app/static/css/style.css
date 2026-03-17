@@ -664,6 +664,8 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   }
   .hero-card.mobile-hero-card {
     min-height: auto;
+    width: 100%;
+    max-width: 100%;
     border-radius: 22px;
     overflow: hidden;
     background: #191919;
@@ -671,12 +673,13 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   }
   .netflix-mobile-card .hero-media {
     position: relative;
+    width: 100%;
     height: 330px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
     background-color: #5a0008;
-    filter: saturate(.95) brightness(.9);
+    filter: saturate(.95) brightness(.72);
   }
   .netflix-mobile-card .hero-overlay.mobile-overlay-card {
     position: relative;
@@ -733,23 +736,21 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   .media-row.mobile-card-row,
   .media-row.mobile-snap-row {
     gap: 10px;
+    padding-right: 12px;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
     touch-action: pan-x;
-    padding-right: 6px;
-    padding-bottom: 2px;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 12px;
   }
   .mobile-portrait-card,
   .mobile-episode-card {
-    flex: 0 0 auto;
     width: 132px;
     border-radius: 16px;
     background: transparent;
     border: 0;
     box-shadow: none;
-    scroll-snap-align: start;
   }
   .mobile-episode-card .thumb,
   .mobile-portrait-card .thumb {
@@ -775,10 +776,8 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
     gap: 16px;
   }
   .stacked-mobile-card {
-    flex: 0 0 auto;
     width: 248px;
     border-radius: 18px;
-    scroll-snap-align: start;
   }
   .stacked-mobile-card .thumb {
     height: 156px;
