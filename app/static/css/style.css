@@ -41,7 +41,7 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   flex-direction: column;
   gap: 18px;
   background: linear-gradient(180deg, rgba(63,0,18,.96), rgba(30,2,10,.92));
-  backdrop-filter: blur(18px);
+  backdrop-filter: none;
 }
 .brand {
   min-height: 72px;
