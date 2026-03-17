@@ -754,8 +754,9 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory;
-    touch-action: pan-x;
+    overscroll-behavior-y: auto;
+    scroll-snap-type: x proximity;
+    touch-action: auto;
     gap: 10px;
     padding-right: 6px;
     padding-bottom: 6px;
@@ -803,5 +804,13 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
   }
   .stacked-mobile-card .thumb {
     height: 156px;
+  }
+}
+
+@media (max-width: 700px) {
+  .media-row.mobile-card-row > *,
+  .media-row.mobile-snap-row > *,
+  .media-row.media-row-landscape > * {
+    -webkit-user-drag: none;
   }
 }
