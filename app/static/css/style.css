@@ -69,10 +69,10 @@ body.home-screen::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar, .content-
 }
 .sidebar-footer {
   margin-top: auto;
-  position: sticky;
-  bottom: 16px;
+  position: static;
+  bottom: auto;
   padding-top: 16px;
-  background: linear-gradient(180deg, rgba(59,23,34,0), rgba(59,23,34,.9) 28%);
+  background: transparent;
 }
 .nav-pill {
   min-height: 52px;
